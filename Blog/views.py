@@ -1,9 +1,13 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render
+from .models import Post
 
 # Create your views here.
 def blogHome(request):
-    return render(request,'blog/blogHome.html')
+    allPosts = Post.objects.all()
+    context = {'allPosts':allPosts}
+    
+    return render(request,'blog/blogHome.html',context)
     # return HttpResponse('this is bloghome we will keep all the blogpost here')
 
 
