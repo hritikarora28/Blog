@@ -2,4 +2,12 @@
 
 {% block title %} Blog Post {% endblock title %}
 
-{% block body %}<h1>We are in Blog Post</h1> {% endblock body %}
+{% block body %}<div class="container my-3">
+    <div class="blog-post">
+            <h2 class="blog-post-title">{{post.title}}</h2>
+            <p class="blog-post-meta">{{post.timestamp}} by <a href="#">{{post.author}}</a></p>
+    
+            <p>{{post.content}}</p>
+            <hr>
+          </div>
+          </div> {% endblock body %}
