@@ -1,8 +1,10 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Contact
 from django.contrib import messages
+from django.contrib.auth.models import User
 from blog.models import Post
+
 
 # Create your views here.
 def home(request):
@@ -41,3 +43,23 @@ def search(request):
         messages.warning(request, "No search results found. Please refine your query.")    
     params={'allPosts': allPosts, 'query':query}
     return render(request, 'home/search.html', params)
+def handleSignup(request):
+    if request.method =='POST':
+        #Get The post parameters
+        username = request.POST['username']
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        pass1 = request.POST['pass1']
+        pass2 = request.POST['pass2']
+        #checks for erroneous input
+
+        #create user
+        myuser = User.objects.create_user(username,email,pass1)
+        myuser_fname = fname
+        myuser_lname = lname
+        myuser.save()
+        messages.success(request,"Your Acoount Has Been Sucessfully Created")
+        return redirect('/')
+    else:
+        return HttpResponse("404-Not Allowed")
