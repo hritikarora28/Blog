@@ -53,6 +53,15 @@ def handleSignup(request):
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
         #checks for erroneous input
+        if len(username)>15:
+            messages.error(request,"Username must be less the 10 characters")
+            return redirect('/')
+        if  username.isalpha():
+            messages.error(request,"Username must be Alpha Numeric")
+            return redirect('/')
+        if pass1!=pass2:
+            messages.error(request,"Passwords don't match please try again")
+            return redirect('/')
 
         #create user
         myuser = User.objects.create_user(username,email,pass1)
