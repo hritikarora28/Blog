@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from .models import Contact
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
 from blog.models import Post
 
 
@@ -72,3 +73,24 @@ def handleSignup(request):
         return redirect('/')
     else:
         return HttpResponse("404-Not Allowed")
+def handleLogin(request):
+    if request.method =='POST':
+        #Get The post parameters
+        loginusername = request.POST['loginusername']
+        loginpass = request.POST['loginpass']
+        user = authenticate(username= loginusername,password= loginpass)
+        if user is not None:
+            login(request,user)
+            messages.success(request,f"Welcome back {loginusername}.Hope you are doing Well ")
+            return redirect("/")
+        else:
+            messages.error(request,"Either password or user name is worng")
+            return redirect("/")
+    return HttpResponse('Go and login,donont try to be over smart')
+def handleLogout(request):
+    logout(request)
+    messages.success(request,"You are sucessfully logout")
+    return redirect("/")
+    
+    
+    
