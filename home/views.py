@@ -77,8 +77,8 @@ def handleLogin(request):
     if request.method =='POST':
         #Get The post parameters
         loginusername = request.POST['loginusername']
-        loginpass = request.POST['loginpass']
-        user = authenticate(username= loginusername,password= loginpass)
+        loginpassword = request.POST['loginpassword']
+        user = authenticate(username= loginusername,password= loginpassword)
         if user is not None:
             login(request,user)
             messages.success(request,f"Welcome back {loginusername}.Hope you are doing Well ")
